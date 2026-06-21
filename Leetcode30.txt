@@ -1,0 +1,324 @@
+389. Find the Difference
+class Solution:
+    def findTheDifference(self, s: str, t: str) -> str:
+        s=list(s)
+        s.sort()
+        t=list(t)
+        t.sort()
+        left,right=0,0
+        while left<len(s) and right<len(s):
+            if s[left]!=t[right]:
+                return t[right]
+            left+=1
+            right+=1
+        return t[-1]
+     
+11. Container With Most Water
+class Solution:
+    def maxArea(self, height: List[int]) -> int:
+        max_area=0
+        left=0
+        right=len(height)-1
+        while left<right:
+            width=right-left
+            miniheight=min(height[left],height[right])
+            area=width*miniheight
+            max_area=max(max_area,area)
+            if height[left]<height[right]:
+                left+=1
+            else:
+                right-=1
+        return max_area
+
+976. Largest Perimeter Triangle
+class Solution:
+    def largestPerimeter(self, nums: List[int]) -> int:
+        nums.sort()
+        for i in range(len(nums)-1,1,-1):
+            if nums[i-2]+nums[i-1]>nums[i]:
+                return nums[i-2]+nums[i-1]+nums[i]
+        return 0
+
+905. Sort Array By Parity
+class Solution:
+    def sortArrayByParity(self, nums: List[int]) -> List[int]:
+        if len(nums)<=1:
+            return nums
+        else:
+            pass
+        left,right=0,len(nums)-1
+        while left<right:
+            if nums[left]%2==0:
+             left+=1
+            elif nums[right]%2==0 and nums[left]%2==0:
+                if nums[left]>nums[right]:
+                    nums[left],nums[right]=nums[right],nums[right]
+                    right-=1
+                    left+=1
+            elif nums[right]%2!=0:
+                right-=1
+            else:
+                nums[left],nums[right]=nums[right],nums[left]
+                right-=1
+                left+=1
+        return nums
+
+4. Median of Two Sorted Arrays
+class Solution:
+    def findMedianSortedArrays(self, nums1: List[int], nums2: List[int]) -> float:
+        arr=nums1+nums2
+        n=len(arr)
+        for i in range(n):
+            position=i
+            for j in range(i+1,n):
+                if arr[j]<arr[position]:
+                    position=j
+            arr[position],arr[i]=arr[i],arr[position]
+        if len(arr)%2==0:
+            return float((arr[(len(arr)//2)-1]+arr[len(arr)//2])/2)
+        else:
+            return float((arr[len(arr)//2]))
+
+3614. Process String with Special Operations II
+class Solution:
+    def processStr(self, s: str, k: int) -> str:
+
+        length = 0
+
+        for ch in s:
+            if ch.isalpha():
+                length += 1
+            elif ch == "#":
+                length *= 2
+            elif ch == "*":
+                if length:
+                    length -= 1
+
+        if k >= length:
+            return "."
+
+        # Backward pass
+        for ch in reversed(s):
+
+            if ch.isalpha():
+
+                if k == length - 1:
+                    return ch
+
+                length -= 1
+
+            elif ch == "#":
+
+                length //= 2
+                k %= length
+
+            elif ch == "%":
+
+                k = length - 1 - k
+
+            else: 
+
+                length += 1
+
+        return "."
+
+1122. Relative Sort Array
+class Solution:
+    def relativeSortArray(self, arr1: List[int], arr2: List[int]) -> List[int]:
+        res=[]
+        for i in arr2:
+            res.extend([i]*arr1.count(i))
+        arr1.sort()
+        for i in arr1:
+            if i not in arr2:
+                res.append(i)
+
+        return res
+
+242. Valid Anagram
+class Solution:
+    def isAnagram(self, s: str, t: str) -> bool:
+        if len(s)!=len(t):
+            return False
+        s=list(s)
+        s.sort()
+        t=list(t)
+        t.sort()
+        left=0
+        right=0
+        while left<len(s) and right<len(t):
+            if s[left]!=t[right]:
+                return False
+            left+=1
+            right+=1
+        return True
+
+169. Majority Element
+class Solution:
+    def majorityElement(self, nums: List[int]) -> int:
+        nums.sort()
+        return nums[len(nums)//2]
+class Solution:
+    def largestAltitude(self, gain: List[int]) -> int:
+        arr=[]
+        for i in range(len(gain)+1):
+            arr.append(0)
+        for i in range(1,len(gain)+1):
+            arr[i]=arr[i-1]+gain[i-1]
+        return max(arr)
+
+128. Longest Consecutive Sequence
+class Solution:
+    def longestConsecutive(self, nums: List[int]) -> int:
+        
+        n_s=set(nums)
+        longest=0
+        for start in n_s:
+            if start-1 not in n_s:
+                length=1
+                while start+length in n_s:
+                    length+=1
+                longest=max(longest,length)
+        return longest
+            
+41. First Missing Positive
+class Solution:
+    def firstMissingPositive(self, nums: List[int]) -> int:
+        nums.sort()
+        target=1
+        for num in nums:
+            if num==target:
+                target+=1
+        return target
+        
+1732. Find the Highest Altitude
+class Solution:
+    def largestAltitude(self, gain: List[int]) -> int:
+        arr=[]
+        for i in range(len(gain)+1):
+            arr.append(0)
+        for i in range(1,len(gain)+1):
+            arr[i]=arr[i-1]+gain[i-1]
+        return max(arr)
+
+1051. Height Checker
+class Solution:
+    def heightChecker(self, heights: List[int]) -> int:
+        expected=heights[:]
+        for i in range(len(expected)):
+            minimum_position=i
+            for minimum in range(i+1,len(expected)):
+                if expected[minimum]<expected[minimum_position]:
+                    minimum_position=minimum
+            expected[i],expected[minimum_position]=expected[minimum_position],expected[i]
+        c=0
+        for i in range(len(expected)):
+            if heights[i]!=expected[i]:
+                c+=1
+        return c
+
+9. Palindrome Number
+class Solution:
+    def isPalindrome(self, x: int) -> bool:
+        y=str(x)
+        if y==y[::-1]:
+            return True
+        else:
+            return False
+
+14. Longest Common Prefix
+class Solution:
+    def longestCommonPrefix(self, strs: List[str]) -> str:
+        common=strs[0]
+        res=""
+        for i in range(1,len(strs)):
+            for k,m in zip(common,strs[i]):
+                if k==m:
+                    res+=k
+                else:
+                    break
+        return res
+
+15. 3Sum
+class Solution:
+    def threeSum(self, nums: list[int]) -> list[list[int]]:
+        nums.sort()
+        ans=[]
+        for i in range(len(nums)):
+            if i>0 and nums[i]==nums[i-1]:
+                continue
+            l=i+1
+            r=len(nums)-1
+            while l<r:
+                s=nums[i]+nums[l]+nums[r]
+                if s==0:
+                    ans.append([nums[i],nums[l],nums[r]])
+                    l+=1
+                    r-=1
+                    while l<r and nums[l]==nums[l-1]:
+                        l+=1
+                    while l<r and nums[r]==nums[r+1]:
+                        r-=1
+                elif s<0:
+                    l+=1
+                else:
+                    r-=1
+        return ans
+
+217. Contains Duplicate
+class Solution:
+    def containsDuplicate(self, nums: List[int]) -> bool:
+        d=set()
+        flag=1
+        for i in range(len(nums)):
+            if nums[i] in d:
+                flag=0
+                return True
+            d.add(nums[i])
+        if flag:
+            return False
+            
+1672. Richest Customer Wealth
+class Solution:
+    def maximumWealth(self, accounts: List[List[int]]) -> int:
+        maximumsalary=0
+        for i in accounts:
+            s=0
+            for j in i:
+                s+=j
+                maximumsalary=max(maximumsalary,s)
+        return maximumsalary
+            
+1480. Running Sum of 1d Array
+class Solution:
+    def runningSum(self, nums: List[int]) -> List[int]:
+        for i in range(1,len(nums)):
+            nums[i]=nums[i-1]+nums[i]
+        return nums
+
+1295. Find Numbers with Even Number of Digits
+class Solution:
+    def findNumbers(self, nums: List[int]) -> int:
+        c=0
+        for i in nums:
+            digits=0
+            while i>0:
+                digits+=1
+                i//=10
+            if digits%2==0:
+                c+=1
+        return c
+
+
+
+
+
+
+
+
+
+
+
+
+
+

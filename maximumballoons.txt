@@ -1,0 +1,42 @@
+Approach
+Create a dictionary to count occurrences of b, a, l, o, and n.
+Traverse the string and update counts.
+Since "balloon" requires:
+2 ls → use count['l'] // 2
+2 os → use count['o'] // 2
+Return the minimum among:
+b
+a
+l // 2
+o // 2
+n
+
+The minimum value represents the maximum number of complete "balloon" words that can be formed.
+
+Complexity
+Time complexity: O(n)
+We traverse the string once.
+Space complexity: O(1)
+Only a fixed-size dictionary of 5 characters is used.
+Code
+class Solution:
+    def maxNumberOfBalloons(self, text: str) -> int:
+        d = {
+            'b': 0,
+            'a': 0,
+            'l': 0,
+            'o': 0,
+            'n': 0
+        }
+
+        for i in text:
+            if i in d:
+                d[i] += 1
+
+        return min(
+            d['b'],
+            d['a'],
+            d['l'] // 2,
+            d['o'] // 2,
+            d['n']
+        )

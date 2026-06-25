@@ -1,0 +1,58 @@
+Approach
+Create a frequency dictionary for s1.
+Let k = len(s1).
+Slide a window of size k over s2.
+For each window:
+Build a frequency dictionary for the current substring.
+Compare it with the frequency dictionary of s1.
+If both dictionaries are equal, return True.
+If no matching window is found, return False.
+Complexity
+Time complexity:
+Building the frequency map of s1: O(k)
+There are (n - k + 1) windows.
+Building the frequency map for each window takes O(k).
+
+Overall:
+
+O((n−k+1)×k)≈O(nk)
+	​
+
+
+where:
+
+n = len(s2)
+k = len(s1)
+Space complexity:
+
+Two dictionaries are used, each storing at most 26 lowercase English letters.
+
+O(26)≈O(1)
+	​
+
+
+(If considering a general character set, it would be O(k).)
+
+Code
+class Solution:
+    def checkInclusion(self, s1: str, s2: str) -> bool:
+        d = {}
+        for i in s1:
+            d[i] = d.get(i, 0) + 1
+
+        left = 0
+        k = len(s1)
+
+        for right in range(len(s2) - k + 1):
+            f = {}
+            s = s2[left:right + k]
+
+            for j in s:
+                f[j] = f.get(j, 0) + 1
+
+            if d == f:
+                return True
+
+            left += 1
+
+        return False

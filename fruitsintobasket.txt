@@ -1,0 +1,41 @@
+Approach
+Use a dictionary to store the frequency of each fruit type in the current window.
+Move the right pointer through the array and add each fruit to the dictionary.
+If the dictionary contains more than two fruit types:
+Decrease the frequency of the fruit at the left pointer.
+Remove it from the dictionary if its frequency becomes zero.
+Move the left pointer forward.
+After every valid window, update the maximum length.
+Return the maximum window size.
+Complexity
+
+Time Complexity: O(n)
+
+Each fruit is added and removed from the sliding window at most once.
+
+Space Complexity: O(1)
+
+The dictionary stores at most 3 fruit types before shrinking, so the extra space is constant.
+
+Code
+class Solution:
+    def totalFruit(self, fruits: List[int]) -> int:
+        d = {}
+        left = 0
+        ans = 0
+
+        for right in range(len(fruits)):
+            d[fruits[right]] = d.get(fruits[right], 0) + 1
+
+            while len(d) > 2:
+                d[fruits[left]] -= 1
+
+                if d[fruits[left]] == 0:
+                    del d[fruits[left]]
+
+                left += 1
+
+            ans = max(ans, right - left + 1)
+
+        return ans
+

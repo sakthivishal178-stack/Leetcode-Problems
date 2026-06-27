@@ -1,0 +1,40 @@
+Approach
+Count the number of white blocks ('W') in the first window of size k.
+Store this as the current answer.
+Slide the window one position at a time:
+If the outgoing character is 'W', decrement the count.
+If the incoming character is 'W', increment the count.
+Update the minimum count.
+Return the minimum number of white blocks found.
+
+Complexity
+Time complexity: O(n)
+We traverse the string once.
+Space complexity: O(1)
+Only a few variables are used.
+
+Code
+class Solution:
+    def minimumRecolors(self, blocks: str, k: int) -> int:
+        left = 0
+        count = 0
+
+        # Count whites in the first window
+        for i in range(k):
+            if blocks[i] != 'B':
+                count += 1
+
+        currcount = count
+
+        # Slide the window
+        for right in range(k, len(blocks)):
+            if blocks[left] != 'B':
+                currcount -= 1
+            left += 1
+
+            if blocks[right] != 'B':
+                currcount += 1
+
+            count = min(count, currcount)
+
+        return count

@@ -1,0 +1,27 @@
+Approach
+For each character in s, scan forward through t (starting from where you left off) to find a match. If you build up a string equal to s by greedily matching characters in order, then s is a subsequence of t.
+Complexity
+Time complexity: O(n × m) in the worst case, where n = len(s) and m = len(t).
+
+For each character in s (n iterations), you scan through t (up to m iterations).
+Actually, since pos only moves forward and never resets, the total work across all iterations of the outer loop is bounded by a single pass through t — so this is actually O(n + m), not O(n × m). The inner loop doesn't restart from 0 each time; it continues from pos. So the total number of inner-loop steps across the whole run is at most len(t).
+
+Space complexity: O(n) — you're building res, a copy of (up to) s, which takes O(n) extra space.
+A few notes on the code itself
+
+The flag variable is unused — dead code, can be removed.
+res is unnecessary. Since you only ever append a character when it matches the current target character in s, res will always either equal s exactly (if you found a full match) or be empty/partial. You can track success with a simple counter instead:
+
+pythonclass Solution:
+    def isSubsequence(self, s: str, t: str) -> bool:
+        pos = 0
+        for ch in s:
+            found = False
+            for j in range(pos, len(t)):
+                if ch == t[j]:
+                    pos = j + 1
+                    found = True
+                    break
+            if not found:
+                return False
+        return True

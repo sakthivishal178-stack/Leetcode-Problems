@@ -1,0 +1,30 @@
+# Intuition
+
+The given array represents a large integer where each element is a digit. One simple approach is to convert the list of digits into a string, convert it to an integer, add one, and then convert the result back into a list of digits.
+
+# Approach
+
+1. Convert each digit to a string.
+2. Join all the strings to form one number.
+3. Convert the string to an integer and add `1`.
+4. Convert the updated number back to a string.
+5. Convert each character of the string back into an integer and return the list.
+
+# Complexity
+
+- **Time complexity:** `O(n)`
+  - Converting, joining, and converting back each require traversing the digits once.
+
+- **Space complexity:** `O(n)`
+  - Extra space is used for the string and the resulting list.
+
+# Code
+
+```python
+class Solution:
+    def plusOne(self, digits: List[int]) -> List[int]:
+        string = "".join(map(str, digits))
+        s = list(str(int(string) + 1))
+        return [int(i) for i in s]
+
+> **Note (Interview):** This solution passes on LeetCode, but interviewers generally expect a solution that processes the digits from right to left without converting the entire number to an integer, since the integer may exceed the language's integer limit.

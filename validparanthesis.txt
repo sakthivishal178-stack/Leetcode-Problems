@@ -1,0 +1,47 @@
+Intuition
+
+We use a stack because brackets must be closed in the reverse order of opening.
+
+Whenever we see an opening bracket ((, {, [), push it onto the stack.
+Whenever we see a closing bracket (), }, ]), it must match the most recent opening bracket (the top of the stack).
+If it doesn't match or the stack is empty, the string is invalid.
+Approach
+Create an empty stack.
+Create a dictionary that maps every closing bracket to its corresponding opening bracket.
+Traverse each character in the string.
+If it is an opening bracket, push it into the stack.
+Otherwise:
+If the stack is empty, return False.
+Pop the top element.
+Compare it with the expected opening bracket using the dictionary.
+If they don't match, return False.
+After the loop, if the stack is empty, return True; otherwise, return False.
+Complexity
+Time complexity: O(n)
+We traverse the string once.
+Space complexity: O(n)
+In the worst case (all opening brackets), the stack stores all characters.
+Code
+class Solution:
+    def isValid(self, s: str) -> bool:
+        stack = []
+
+        d = {
+            ")": "(",
+            "}": "{",
+            "]": "["
+        }
+
+        for ch in s:
+            if ch in "({[":
+                stack.append(ch)
+            else:
+                if len(stack) == 0:
+                    return False
+
+                top = stack.pop()
+
+                if top != d[ch]:
+                    return False
+
+        return len(stack) == 0

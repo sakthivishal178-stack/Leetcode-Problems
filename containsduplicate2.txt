@@ -1,0 +1,31 @@
+Intuition
+
+Use a hash map to store the most recent index of every number. While traversing the array, if the current number has been seen before, calculate the distance between its previous index and the current index. If the distance is less than or equal to k, a nearby duplicate exists, so return True. Otherwise, update the index of that number.
+
+Approach
+Create a hash map to store the latest index of each element.
+Traverse the array from left to right.
+For each element:
+If it already exists in the hash map:
+Check whether the difference between the current index and the previous index is less than or equal to k.
+If yes, return True.
+Otherwise, update its index.
+If no valid nearby duplicate is found after traversing the array, return False.
+Complexity
+Time complexity: O(n)
+Each element is visited once, and dictionary operations take O(1) on average.
+Space complexity: O(n)
+In the worst case, all elements are unique and stored in the hash map.
+Code
+class Solution:
+    def containsNearbyDuplicate(self, nums: List[int], k: int) -> bool:
+        last_index = {}
+
+        for i in range(len(nums)):
+            if nums[i] in last_index:
+                if i - last_index[nums[i]] <= k:
+                    return True
+
+            last_index[nums[i]] = i
+
+        return False

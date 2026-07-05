@@ -1,0 +1,36 @@
+# Intuition
+Since the array is sorted, binary search is the most efficient way to find the target or determine where it should be inserted. At each step, compare the target with the middle element and eliminate half of the remaining search space.
+
+# Approach
+- Initialize two pointers: `left` at the beginning and `right` at the end of the array.
+- While `left <= right`:
+  - Calculate the middle index.
+  - If the middle element equals the target, return its index.
+  - If the target is greater than the middle element, search the right half.
+  - Otherwise, search the left half.
+- If the target is not found, the `left` pointer will indicate the correct insertion position.
+- Return `left`.
+
+# Complexity
+- **Time complexity:** `O(log n)`
+- **Space complexity:** `O(1)`
+
+# Code
+```python
+class Solution:
+    def searchInsert(self, nums: List[int], target: int) -> int:
+        left = 0
+        right = len(nums) - 1
+
+        while left <= right:
+            mid = (left + right) // 2
+
+            if nums[mid] == target:
+                return mid
+            elif target > nums[mid]:
+                left = mid + 1
+            else:
+                right = mid - 1
+
+        return left
+```

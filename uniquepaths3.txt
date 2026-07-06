@@ -1,0 +1,61 @@
+Intuition
+
+The path must start from the starting square, visit every non-obstacle square exactly once, and finish at the ending square. Since every valid path has to explore different possible directions while ensuring no cell is revisited, backtracking (DFS) is the natural approach. We mark each visited cell, recursively explore all four directions, and then unmark it so that other paths can reuse the cell.
+
+Approach
+Count the total number of non-obstacle cells (total), including the start and end cells.
+Find the starting position (1).
+Perform DFS from the start:
+If the current position is out of bounds, an obstacle, or already visited, return.
+If the current cell is the ending cell (2):
+Check whether all non-obstacle cells have been visited (visited == total).
+If yes, increment the answer.
+Return.
+Mark the current cell as visited.
+Explore all four directions.
+Backtrack by unmarking the current cell.
+Return the total number of valid paths.
+Complexity
+Time complexity:
+O(4^(m × n)) in the worst case, since from each cell we may explore up to four directions. Due to the visited constraint, the actual search space is much smaller.
+Space complexity:
+O(m × n) for the visited matrix and the recursion stack.
+Code
+class Solution:
+    def uniquePathsIII(self, grid: List[List[int]]) -> int:
+        def solve(i, j, v):
+            nonlocal count
+
+            if i < 0 or j < 0 or i >= n or j >= m or grid[i][j] == -1 or sol[i][j]:
+                return
+
+            if grid[i][j] == 2:
+                if v == total:
+                    count += 1
+                return
+
+            sol[i][j] = 1
+
+            solve(i, j + 1, v + 1)
+            solve(i + 1, j, v + 1)
+            solve(i - 1, j, v + 1)
+            solve(i, j - 1, v + 1)
+
+            sol[i][j] = 0
+
+        n = len(grid)
+        m = len(grid[0])
+
+        sol = [[0] * m for _ in range(n)]
+        count = 0
+        total = 0
+
+        for i in range(n):
+            for j in range(m):
+                if grid[i][j] != -1:
+                    total += 1
+                if grid[i][j] == 1:
+                    sr, sc = i, j
+
+        solve(sr, sc, 1)
+        return count

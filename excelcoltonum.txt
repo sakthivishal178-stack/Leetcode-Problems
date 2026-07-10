@@ -1,0 +1,35 @@
+Intuition
+
+Treat the Excel column title as a number in base-26, where:
+
+A = 1
+B = 2
+...
+Z = 26
+
+Just like converting a decimal number from its digits (123 = 1×10² + 2×10 + 3), we convert the column title by multiplying the current result by 26 and adding the value of the current character.
+
+Approach
+Initialize res = 0.
+Traverse each character in the string.
+Convert the character to its corresponding value:
+A → 1
+B → 2
+...
+Z → 26
+Update the result:
+res = res * 26 + value
+Return the final result.
+Complexity
+Time complexity: O(n)
+Space complexity: O(1)
+Code
+class Solution:
+    def titleToNumber(self, columnTitle: str) -> int:
+        res = 0
+
+        for ch in columnTitle:
+            value = ord(ch) - ord('A') + 1
+            res = res * 26 + value
+
+        return res

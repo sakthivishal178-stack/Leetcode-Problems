@@ -18,7 +18,7 @@ B → 2
 ...
 Z → 26
 Update the result:
-res = res * 26 + value
+res = reS * 26 + value
 Return the final result.
 Complexity
 Time complexity: O(n)

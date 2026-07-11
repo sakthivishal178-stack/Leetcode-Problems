@@ -1,0 +1,37 @@
+# Intuition
+<!-- Describe your first thoughts on how to solve this problem. -->
+
+# Approach
+<!-- Describe your approach to solving the problem. -->
+
+# Complexity
+- Time complexity:
+<!-- Add your time complexity here, e.g. $$O(n)$$ -->
+
+- Space complexity:
+<!-- Add your space complexity here, e.g. $$O(n)$$ -->
+
+# Code
+```python3 []
+class Solution:
+    def validPalindrome(self, s: str) -> bool:
+        def is_palindrome_range(l, r):
+        # reusable helper using the SAME two-pointer pattern
+            while l < r:
+                if s[l] != s[r]:
+                    return False
+                l += 1
+                r -= 1
+            return True
+
+        left, right = 0, len(s) - 1
+        while left < right:
+            if s[left] != s[right]:
+            # mismatch found — try skipping one side or the other
+                return (is_palindrome_range(left + 1, right) or
+                is_palindrome_range(left, right - 1))
+            left += 1
+            right -= 1
+        return True
+
+```

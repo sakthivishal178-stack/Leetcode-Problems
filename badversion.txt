@@ -1,5 +1,5 @@
 # Intuition
-The versions are sorted in a way that all versions before the first bad version are good, and all versions after it are bad. This monotonic property allows us to use Binary Search to efficiently find the first bad version while minimizing API calls.
+The versions are sorted in a way that all versions before the first bad version are good, and all versions after it are bad. This monotonic property allows us to use Binary Search to efficiently find the first bad version while nimizing API calls.
 
 # Approach
 - Initialize two pointers:

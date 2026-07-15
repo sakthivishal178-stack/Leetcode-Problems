@@ -15,7 +15,7 @@ If it overflows, return 0
 Complexity
 Time complexity: O(log(x)) - We process each digit of the number once. The number of digits in x is proportional to log10(x).
 
-Space complexity: O(1) - We only use a constant amount of extra space for variables.
+Space complexity: O(1) - We only use a Constant amount of extra space for variables.
 
 Code
 python3

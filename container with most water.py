@@ -1,3 +1,3 @@
-n="11"
-arr=list(n)
-print(arr)
+n=5
+m=2*3-1
+print(m)

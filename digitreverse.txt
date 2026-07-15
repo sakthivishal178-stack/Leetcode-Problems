@@ -1,0 +1,37 @@
+Intuition
+The problem requires reversing the digits of a 32-bit signed integer while handling overflow. The key insight is that we can extract digits from the end of the number using modulo 10, and build the reversed number by multiplying the current result by 10 and adding the extracted digit. We need to handle negative numbers separately and check for overflow at the end.
+
+Approach
+Store the sign of the input number using a flag
+Convert the number to its absolute value
+Initialize a variable rev to store the reversed number
+While the number is greater than 0:
+Extract the last digit using x % 10
+Append it to rev by multiplying rev by 10 and adding the digit
+Remove the last digit from x using integer division x //= 10
+Check if the reversed number is within the 32-bit signed integer range [-2^31, 2^31 - 1]
+If it is, return the reversed number with the correct sign
+If it overflows, return 0
+Complexity
+Time complexity: O(log(x)) - We process each digit of the number once. The number of digits in x is proportional to log10(x).
+
+Space complexity: O(1) - We only use a constant amount of extra space for variables.
+
+Code
+python3
+
+class Solution:
+    def reverse(self, x: int) -> int:
+        rev=0
+        flag=1
+        if x<0:
+            flag=0
+        x=abs(int(x))
+        while x>0:
+            num=x%10
+            rev=rev*10+num
+            x//=10
+        if rev>=-(2**31) and rev<(2**31):
+            return rev if flag else -rev
+        else:
+            return 0

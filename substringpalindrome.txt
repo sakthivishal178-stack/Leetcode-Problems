@@ -1,0 +1,47 @@
+Intuition
+
+Every palindrome has a center. Instead of checking every possible substring, treat each index as the center of a palindrome and expand outward while the characters on both sides are equal. Since palindromes can have either odd or even lengths, check both cases for every index and keep track of the longest palindrome found.
+
+Approach
+Create a helper function expand(left, right) that expands around the given center until the characters no longer match.
+For every index i in the string:
+Expand around (i, i) to find the longest odd-length palindrome.
+Expand around (i, i + 1) to find the longest even-length palindrome.
+Compare the lengths of the palindromes returned and update the starting and ending indices of the longest palindrome.
+Return the substring from start to end.
+Complexity
+
+Time complexity: O(n²)
+
+There are 2n - 1 possible centers, and in the worst case each expansion can take O(n) time.
+
+Space complexity: O(1)
+
+Only a few variables are used, and no extra data structures are required.
+
+Code
+class Solution:
+    def longestPalindrome(self, s: str) -> str:
+        def expand(left, right):
+            while left >= 0 and right < len(s) and s[left] == s[right]:
+                left -= 1
+                right += 1
+            return left + 1, right - 1
+
+        start = 0
+        end = 0
+
+        for i in range(len(s)):
+            # Odd length palindrome
+            l1, r1 = expand(i, i)
+
+            # Even length palindrome
+            l2, r2 = expand(i, i + 1)
+
+            if r1 - l1 > end - start:
+                start, end = l1, r1
+
+            if r2 - l2 > end - start:
+                start, end = l2, r2
+
+        return s[start:end + 1]

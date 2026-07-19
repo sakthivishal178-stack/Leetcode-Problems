@@ -2,7 +2,7 @@ Approach
 Merge nums1 and nums2 into a new array arr.
 Sort arr using Selection Sort:
 For each position, find the smallest element in the remaining part of the array.
-Swap it into its correct position.
+Swap it into its correct position
 Check the length of the sorted array:
 If odd, return the middle element.
 If even, return the average of the two middle elements.

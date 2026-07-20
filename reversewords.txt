@@ -1,0 +1,44 @@
+# Intuition
+To reverse each word in the given string while preserving the original word order, we can process each word independently. Using the two-pointer technique allows us to reverse the characters of each word efficiently.
+
+# Approach
+- Split the input string into individual words using `split()`.
+- Traverse through each word.
+- Convert the word into a list of characters since strings are immutable.
+- Use two pointers (`left` and `right`) to reverse the characters in-place.
+- Convert the reversed character list back into a string and store it.
+- Finally, join all the reversed words with a single space and return the result.
+
+# Complexity
+- **Time complexity:** `O(n)`
+  - Each character in the string is visited at most once during the reversal process.
+
+- **Space complexity:** `O(n)`
+  - Additional space is required to store the list of words and the resulting reversed words.
+
+# Code
+```python
+class Solution:
+    def reverseWords(self, s: str) -> str:
+        words = list(s.split())
+        string = []
+        j = 0
+
+        for i in words:
+            j += 1
+            i = list(i)
+            left = 0
+            right = len(i) - 1
+
+            while left <= right:
+                i[left], i[right] = i[right], i[left]
+                left += 1
+                right -= 1
+
+            word = "".join(i)
+            string.append(word)
+
+            if j != len(words):
+                string.append(" ")
+
+        return "".join(string)
